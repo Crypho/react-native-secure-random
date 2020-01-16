@@ -3,7 +3,8 @@ import { Buffer } from 'buffer'
 
 const { SecureRandom } = NativeModules
 
-const POOL_SIZE = 1024
+const DESIRED_POOL_SIZE = 2048
+const MINIMUM_POOL_SIZE = 1024
 const pool = []
 
 function b64ToUInt8(b64) {
@@ -11,8 +12,9 @@ function b64ToUInt8(b64) {
 }
 
 function fillPool() {
-  if (pool.length < POOL_SIZE) {
-    randomBytesAsync(POOL_SIZE - pool.length).then(seed => {
+  const randomAvailable = pool.length
+  if (randomAvailable < MINIMUM_POOL_SIZE) {
+    randomBytesAsync(DESIRED_POOL_SIZE - randomAvailable).then(seed => {
       pool.push(...seed)
     })
   }
