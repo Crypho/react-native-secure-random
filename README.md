@@ -26,7 +26,7 @@ In order to support legacy code that needs randomness synchronously you can use 
 ```javascript
 import { randomBytesSync } from 'react-native-secure-random'
 
-const bytes = randomBytesSync(10) // bytes is an Uint8Array of 10 elements.
+const bytes = randomBytesSync(10) // bytes is an array of 10 numbers.
 ```
 
 Note that `randomBytesSync` relies on having a small pool which it fills when the package is initialized, and refills when it starts to run low. That means that it is possible to deplete the pool faster than you fill it if you request a lot of bytes fast. An exception will be thrown in that case.

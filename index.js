@@ -20,10 +20,22 @@ function fillPool() {
   }
 }
 
+/**
+ * Generate random data asynchronously
+ *
+ * @param {number} length Number of bytes to generate
+ * @returns {Uint8Array}
+ */
 function randomBytesAsync(length) {
   return SecureRandom.randomBytesAsync(length).then(b64ToUInt8)
 }
 
+/**
+ * Generate random data synchronously.
+ *
+ * @param {number} length Number of bytes to generate
+ * @returns {number[]}
+ */
 function randomBytesSync(length) {
   if (length > pool.length) {
     throw new Error('Random pool depleted')
