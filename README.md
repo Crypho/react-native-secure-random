@@ -15,21 +15,21 @@ Synchronous and asynchronous native random number provider for iOS and Android.
 
 To obtain bytes asynchronously use `randomBytesAsync`.
 ```javascript
-import {randomBytesAsync} from 'react-native-secure-random';
+import { randomBytesAsync } from 'react-native-secure-random'
 
 randomBytesAsync(10).then(bytes => {
-    // bytes is an Uint8Array of 10 elements.
+  // bytes is an Uint8Array of 10 elements.
 })
 ```
 
 In order to support legacy code that needs randomness synchronously you can use the synchronous version:
 ```javascript
-import {randomBytesSync} from 'react-native-secure-random';
+import { randomBytesSync } from 'react-native-secure-random'
 
 const bytes = randomBytesSync(10) // bytes is an Uint8Array of 10 elements.
 ```
 
-Note that `randomBytesSync` relies on having a small pool which it feeds when the package is initialized and then every time you fetch bytes from it. That means that it is possible to deplete the pool faster than you fill it if you request a lot of bytes fast. An exception will be thrown in that case.
+Note that `randomBytesSync` relies on having a small pool which it fills when the package is initialized, and refills when it starts to run low. That means that it is possible to deplete the pool faster than you fill it if you request a lot of bytes fast. An exception will be thrown in that case.
 
 ## LICENSE
 
