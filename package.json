@@ -1,5 +1,5 @@
 {
-  "name": "react-native-secure-random",
+  "name": "@crypho/react-native-secure-random",
   "title": "Secure random for react native",
   "version": "1.0.0",
   "description": "Secure random byte generation for react native",
