@@ -45,6 +45,17 @@ function randomBytesSync(length) {
   return bytes
 }
 
+/**
+ * Alias randomBytes to randomBytesSync, so that
+ * the module can work as a replacement to node's crypto.
+ *
+ * @param {number} length Number of bytes to generate
+ * @returns {number[]}
+ */
+function randomBytes(length) {
+  return randomBytesSync(length)
+}
+
 fillPool()
 
-export { randomBytesAsync, randomBytesSync }
+export { randomBytesAsync, randomBytesSync, randomBytes }
