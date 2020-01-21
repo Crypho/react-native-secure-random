@@ -11,14 +11,20 @@ function b64ToUInt8(b64) {
   return new Uint8Array(Buffer(b64, 'base64'))
 }
 
-async function fillPool() {
+/**
+ * Refill the random pool used by randomBytes()
+ *
+ * Normally you do not need to call this function yourself; it is
+ * automatically invoked by randomBytesSync if the pool is starting
+ * to become low.
+ *
+ * @returns {Promise<void>}
+ */
+export async function fillPool() {
   const randomAvailable = pool.length
   if (randomAvailable < MINIMUM_POOL_SIZE) {
-    return randomBytesAsync(DESIRED_POOL_SIZE - randomAvailable).then(seed => {
-      pool.push(...seed)
-    })
-  } else {
-    return Promise.resolve()
+    const seed = await randomBytesAsync(DESIRED_POOL_SIZE - randomAvailable)
+    pool.push(...seed)
   }
 }
 
@@ -26,9 +32,9 @@ async function fillPool() {
  * Generate random data asynchronously
  *
  * @param {number} length Number of bytes to generate
- * @returns {Uint8Array}
+ * @returns {Promise<Uint8Array>}
  */
-function randomBytesAsync(length) {
+export function randomBytesAsync(length) {
   return SecureRandom.randomBytesAsync(length).then(b64ToUInt8)
 }
 
@@ -38,7 +44,7 @@ function randomBytesAsync(length) {
  * @param {number} length Number of bytes to generate
  * @returns {number[]}
  */
-function randomBytesSync(length) {
+export function randomBytesSync(length) {
   if (length > pool.length) {
     throw new Error('Random pool depleted')
   }
@@ -54,10 +60,8 @@ function randomBytesSync(length) {
  * @param {number} length Number of bytes to generate
  * @returns {number[]}
  */
-function randomBytes(length) {
+export function randomBytes(length) {
   return randomBytesSync(length)
 }
 
 fillPool()
-
-export { randomBytesAsync, randomBytesSync, randomBytes, fillPool }

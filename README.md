@@ -34,7 +34,7 @@ const bytes = randomBytesSync(10) // bytes is an array of 10 numbers.
 
 Note that `randomBytesSync` relies on having a small pool which it fills when the package is initialized, and refills when it starts to run low. That means that it is possible to deplete the pool faster than you fill it if you request a lot of bytes fast. An exception will be thrown in that case.
 
-The pool will be re-filled every time bytes are taken out of it. If you want to manually refill you can call
+The pool will be re-filled every time bytes are taken out of it. If you want to manually refill or be sure that the pool is filled you can call `fillPool()` yourself:
 
 ```javascript
 import { fillPool } from 'react-native-secure-random'
