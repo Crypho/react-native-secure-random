@@ -11,12 +11,14 @@ function b64ToUInt8(b64) {
   return new Uint8Array(Buffer(b64, 'base64'))
 }
 
-function fillPool() {
+async function fillPool() {
   const randomAvailable = pool.length
   if (randomAvailable < MINIMUM_POOL_SIZE) {
-    randomBytesAsync(DESIRED_POOL_SIZE - randomAvailable).then(seed => {
+    return randomBytesAsync(DESIRED_POOL_SIZE - randomAvailable).then(seed => {
       pool.push(...seed)
     })
+  } else {
+    return Promise.resolve()
   }
 }
 
@@ -58,4 +60,4 @@ function randomBytes(length) {
 
 fillPool()
 
-export { randomBytesAsync, randomBytesSync, randomBytes }
+export { randomBytesAsync, randomBytesSync, randomBytes, fillPool }
